@@ -8,5 +8,5 @@ docker build . -t conda-xeus-cling:opencv_4_5_5
 # Installs helper headers for OpenCV and xeus-cling
 # Installs ML libraries for jupyter/python
 cd ../final_setup
-docker build . -t conda-xeus-cling_opencv_4_5_5:main
+docker build . -t ssarnev/xeus-cling-opencv-xwidgets:opencv_4_5_5
 
