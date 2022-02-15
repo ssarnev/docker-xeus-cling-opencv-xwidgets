@@ -1,9 +1,25 @@
-FROM conda-xeus-cling:base
+# Build the base
+###============--------------
 
-ARG OPENCV_VERSION=4.5.5
+FROM continuumio/miniconda3:4.10.3p1
 
+RUN apt-get update && apt-get upgrade -yf
+
+RUN apt-get install -y libtool pkg-config build-essential autoconf automake git cmake tmux vim python3-pip
+
+RUN mkdir /root/source
 WORKDIR /root/source
 
+# install dependency
+ADD ./build_dependencies.sh /root/source/build_dependencies.sh
+RUN chmod +x ./build_dependencies.sh
+RUN ./build_dependencies.sh
+
+
+# Compile and install OpenCV
+###============--------------
+
+ARG OPENCV_VERSION=4.5.5
 
 RUN git clone -b $OPENCV_VERSION https://github.com/opencv/opencv_contrib.git --depth 1
 RUN git clone -b $OPENCV_VERSION https://github.com/opencv/opencv.git --depth 1
@@ -62,5 +78,26 @@ RUN cmake \
 RUN make -j`grep -c '^processor' /proc/cpuinfo` && make install
 
 RUN rm -rf /root/source/*
+
+
+# Final setup
+###============--------------
+# - Create a header for the OpenCV include files and libraries to be used from inside xeus-cling
+# - Install common ML, visualization and math libraries for Python
+# - Add paths to the Python3 headers to resolve dependencies.
+
+# Make the OpenCV libraries ahd headers to be accessible from within the Jupyter Notebook
+ADD ./install_jupyter_opencv.sh ./install_jupyter_opencv.sh
+RUN chmod +x ./install_jupyter_opencv.sh  && ./install_jupyter_opencv.sh
+
+# Install Machine Learning libraries for Python
+RUN pip3 install pandas keras matplotlib numpy opencv-python tensorflow scikit-learn
+
+ENV C_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$C_INCLUDE_PATH"
+ENV CPLUS_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$CPLUS_INCLUDE_PATH"
+
+
+# The default command
+###============--------------
 
 CMD chown jupyter -R /notebook && su jupyter -- /home/jupyter/run.sh
