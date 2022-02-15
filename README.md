@@ -23,17 +23,20 @@ It allows for the use of **OpenCV 4.5.5** from C++ inside the Jupyter notebook. 
 
  - **Using directly the pre-built Docker image**
    - Install docker
-   - docker run -it -v &lt;Local directory to be mounted as a workspace&gt;:/workspace -w /workspace -p 8888:8888 ssarnev/xeus-cling-opencv-xwidgets:opencv_4.5.5 /bin/bash
-   - jupyter notebook --allow-root --ip=0.0.0.0 --port=8888
+   - docker run -it -v &lt;Local directory to be mounted as a workspace&gt;:/workspace -w /workspace -p 8888:8888 ssarnev/xeus-cling-opencv-xwidgets:opencv_4.5.5
  - **Building the image locally**
    - Install docker
    - Open Git Bash
    - git clone https://github.com/ssarnev/docker-xeus-cling-opencv-xwidgets.git &lt;directory of your choice&gt;
    - cd &lt;directory of your choice&gt;/docker-xeus-cling-opencv-xwidgets
    - bash build.sh
-   - docker run -it -v &lt;Local directory to be mounted as a workspace&gt;:/workspace -w /workspace -p 8888:8888 ssarnev/xeus-cling-opencv-xwidgets:opencv_4.5.5 /bin/bash
-   - jupyter notebook --allow-root --ip=0.0.0.0 --port=8888   
-    
+   - docker run -it -v &lt;Local directory to be mounted as a workspace&gt;:/workspace -w /workspace -p 8888:8888 ssarnev/xeus-cling-opencv-xwidgets:opencv_4.5.5
+ 
+## Demo code
+ - An interactive Discrete Fourier Transform image filtering
+	- Directies where it can be found
+		- /workspace/demo  **(Only in case there is no volume mounted to the workspace directory)**
+		- /content/demo
  
 ## Acknowledgement
  Inspired and based on the following
