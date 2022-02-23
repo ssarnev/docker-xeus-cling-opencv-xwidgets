@@ -102,4 +102,6 @@ COPY /workspace /content
 # The default command
 ###============--------------
 
-CMD jupyter notebook --allow-root --ip=0.0.0.0 --port=8888
+# CMD jupyter notebook --allow-root --ip=0.0.0.0 --port=8888
+CMD /bin/bash
+
