@@ -7,7 +7,7 @@ A docker image with a preinstalled set of libraries, frameworks and applications
 The common use cases are research and experimenting, creating tutorials and presentations.
 
 ## Key features
-It allows for the use of **OpenCV 4.5.5** from C++ inside the Jupyter notebook. The UI components from **xwidgets**, help the creation of even more interactive experience.
+It allows for the use of **OpenCV 4.5.5** from C++ inside the Jupyter notebook. The UI components from **xwidgets**, help the creation of an even more interactive experience.
 
 <img src="./interactive.gif" width="60%"/>
 
@@ -34,7 +34,7 @@ It allows for the use of **OpenCV 4.5.5** from C++ inside the Jupyter notebook. 
  
 ## Demo code
  - An interactive Discrete Fourier Transform image filtering
-	- Directies where it can be found
+	- Directories where it can be found
 		- /workspace/demo  **(Only in case there is no volume mounted to the workspace directory)**
 		- /content/demo
  
