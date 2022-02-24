@@ -100,9 +100,7 @@ RUN pip3 install pandas keras matplotlib numpy opencv-python tensorflow scikit-l
 ENV C_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$C_INCLUDE_PATH"
 ENV CPLUS_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$CPLUS_INCLUDE_PATH"
 
-WORKDIR /workspace
-COPY /workspace /workspace
-
+# Keep a copy of the original content in /content
 WORKDIR /content
 COPY /workspace /content
 
@@ -112,20 +110,21 @@ COPY /workspace /content
 RUN useradd jupyter && \
 	mkdir -p /home/jupyter/ && \
 	chown jupyter -R /home/jupyter && \
-	mkdir -m777 /notebook && \
+	mkdir -p /notebook && \
 	chown jupyter /notebook && \
 	echo "jupyter notebook --generate-config" > /home/jupyter/setup.sh && \
 	chmod +x /home/jupyter/setup.sh && \
 	su jupyter -- /home/jupyter/setup.sh && \
-	echo "cd /notebook && jupyter notebook --no-browser --ip=0.0.0.0" > /home/jupyter/run.sh && \
+	echo "cd /notebook && jupyter notebook -w /notebook --no-browser --ip=0.0.0.0" > /home/jupyter/run.sh && \
 	chmod +x /home/jupyter/run.sh && \
 	echo "jupyter notebook password" > /home/jupyter/modify_password.sh && \
-	chmod +x /home/jupyter/modify_password.sh
-
+	chmod +x /home/jupyter/modify_password.sh && \
+	cp -r /content/* /notebook
 
 
 # The default command
 ###============--------------
+
 
 CMD chown jupyter -R /notebook && su jupyter -- /home/jupyter/run.sh
 
