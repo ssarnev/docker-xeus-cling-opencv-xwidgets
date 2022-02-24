@@ -94,6 +94,9 @@ RUN rm -rf /root/source/*
 ADD ./install_jupyter_opencv.sh ./install_jupyter_opencv.sh
 RUN chmod +x ./install_jupyter_opencv.sh  && ./install_jupyter_opencv.sh
 
+# Install Machine Learning libraries for Python
+RUN pip3 install pandas keras matplotlib numpy opencv-python tensorflow scikit-learn
+
 ENV C_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$C_INCLUDE_PATH"
 ENV CPLUS_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/conda/lib/python3.9/site-packages/numpy/core/include:$CPLUS_INCLUDE_PATH"
 
@@ -124,7 +127,5 @@ RUN useradd jupyter && \
 # The default command
 ###============--------------
 
-# CMD jupyter notebook --allow-root --ip=0.0.0.0 --port=8888
-# CMD /bin/bash
 CMD chown jupyter -R /notebook && su jupyter -- /home/jupyter/run.sh
 
