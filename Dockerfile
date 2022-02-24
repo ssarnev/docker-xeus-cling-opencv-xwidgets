@@ -3,6 +3,11 @@
 
 FROM continuumio/miniconda3:4.10.3p1
 
+MAINTAINER Stefan Sarnev <stefan.sarnev@gmail.com>
+
+ENV LANG=C.UTF-8
+
+
 RUN apt-get update && apt-get upgrade -yf
 
 RUN apt-get install -y libtool pkg-config build-essential autoconf automake git cmake tmux vim python3-pip
@@ -99,9 +104,27 @@ WORKDIR /content
 COPY /workspace /content
 
 
+#
+###============--------------
+RUN useradd jupyter && \
+	mkdir -p /home/jupyter/ && \
+	chown jupyter -R /home/jupyter && \
+	mkdir -p /notebook && \
+	chown jupyter /notebook && \
+	echo "jupyter notebook --generate-config" > /home/jupyter/setup.sh && \
+	chmod +x /home/jupyter/setup.sh && \
+	su jupyter -- /home/jupyter/setup.sh && \
+	echo "cd /notebook && jupyter notebook --no-browser --ip=0.0.0.0" > /home/jupyter/run.sh && \
+	chmod +x /home/jupyter/run.sh && \
+	echo "jupyter notebook password" > /home/jupyter/modify_password.sh && \
+	chmod +x /home/jupyter/modify_password.sh
+
+
+
 # The default command
 ###============--------------
 
 # CMD jupyter notebook --allow-root --ip=0.0.0.0 --port=8888
-CMD /bin/bash
+# CMD /bin/bash
+CMD chown jupyter -R /notebook && su jupyter -- /home/jupyter/run.sh
 
