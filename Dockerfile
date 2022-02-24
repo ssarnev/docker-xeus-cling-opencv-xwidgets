@@ -112,7 +112,7 @@ COPY /workspace /content
 RUN useradd jupyter && \
 	mkdir -p /home/jupyter/ && \
 	chown jupyter -R /home/jupyter && \
-	mkdir -p /notebook && \
+	mkdir -m u=rwx /notebook && \
 	chown jupyter /notebook && \
 	echo "jupyter notebook --generate-config" > /home/jupyter/setup.sh && \
 	chmod +x /home/jupyter/setup.sh && \
