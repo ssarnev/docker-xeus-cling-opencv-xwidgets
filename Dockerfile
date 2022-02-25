@@ -104,27 +104,27 @@ ENV CPLUS_INCLUDE_PATH="/usr/local/include:/opt/conda/include/python3.9:/opt/con
 WORKDIR /content
 COPY /workspace /content
 
+WORKDIR /workspace
 
 #
 ###============--------------
 RUN useradd jupyter && \
 	mkdir -p /home/jupyter/ && \
 	chown jupyter -R /home/jupyter && \
-	mkdir -p /notebook && \
-	chown jupyter /notebook && \
+	chown jupyter /workspace && \
 	echo "jupyter notebook --generate-config" > /home/jupyter/setup.sh && \
 	chmod +x /home/jupyter/setup.sh && \
 	su jupyter -- /home/jupyter/setup.sh && \
-	echo "cd /notebook && jupyter notebook -w /notebook --no-browser --ip=0.0.0.0" > /home/jupyter/run.sh && \
+	echo "cd /workspace && jupyter notebook -w /notebook --no-browser --ip=0.0.0.0" > /home/jupyter/run.sh && \
 	chmod +x /home/jupyter/run.sh && \
 	echo "jupyter notebook password" > /home/jupyter/modify_password.sh && \
 	chmod +x /home/jupyter/modify_password.sh && \
-	cp -r /content/* /notebook
+	cp -r /content/* /workspace
 
 
 # The default command
 ###============--------------
 
 
-CMD chown jupyter -R /notebook && su jupyter -- /home/jupyter/run.sh
+CMD chown jupyter -R /workspace && su jupyter -- /home/jupyter/run.sh
 
