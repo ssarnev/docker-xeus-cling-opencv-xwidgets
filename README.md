@@ -1,7 +1,9 @@
 <center>
-    <h1 itemprop="headline">Creation of Docker image xeus-cling-opencv-xwidgets</h1>
+    <h1 itemprop="headline">Docker image xeus-cling-opencv-xwidgets</h1>
 </center>
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ssarnev/docker-xeus-cling-opencv-xwidgets/simplified?labpath=.%2Fdemo%2FInteractive_DFT_demo.ipynb)
+
 <br><br>
 
 A docker image with a preinstalled set of libraries, frameworks and applications with an emphasis on **Computer Vision** and **Machine Learning** specifically in **C++**.
