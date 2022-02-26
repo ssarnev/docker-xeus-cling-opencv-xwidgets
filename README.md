@@ -31,6 +31,10 @@ It allows for the use of **OpenCV 4.5.5** from C++ inside the Jupyter notebook. 
    - cd &lt;directory of your choice&gt;/docker-xeus-cling-opencv-xwidgets
    - bash build.sh
    - docker run -it -v &lt;Local directory to be mounted as a workspace&gt;:/workspace -w /workspace -p 8888:8888 ssarnev/xeus-cling-opencv-xwidgets:opencv_4.5.5
+   
+## Try it on Binder without installation
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ssarnev/docker-xeus-cling-opencv-xwidgets/simplified?labpath=.%2Fdemo%2FInteractive_DFT_demo.ipynb)
  
 ## Demo code
  - An interactive Discrete Fourier Transform image filtering
